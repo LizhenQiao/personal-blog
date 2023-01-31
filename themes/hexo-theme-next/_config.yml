@@ -164,7 +164,7 @@ sidebar:
 # Sidebar Avatar
 avatar:
   # Replace the default image and set the url here.
-  url: https://media-exp1.licdn.com/dms/image/D5635AQGQ07uxyokaxQ/profile-framedphoto-shrink_100_100/0/1632527332045?e=1635829200&v=beta&t=qReaLysFlh4S0rnpLLFRhojuSFRMEsAhvtCEQgceY_U
+  url: https://drive.google.com/uc?id=1WMhP2COT-xMFF4vnVK6znCFG-QHjnTgU
   # url: /images/avatar.png
   # If true, the avatar will be dispalyed in circle.
   rounded: true
