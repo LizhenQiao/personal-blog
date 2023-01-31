@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>LizhenQiao&#39;s Space</title>
+  
+  
+  <link href="https://lizhenqiao.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://lizhenqiao.github.io/"/>
+  <updated>2021-11-01T06:43:12.531Z</updated>
+  <id>https://lizhenqiao.github.io/</id>
+  
+  <author>
+    <name>Lizhen Qiao</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>比特币的背后</title>
+    <link href="https://lizhenqiao.github.io/2021/10/30/bitcoin/"/>
+    <id>https://lizhenqiao.github.io/2021/10/30/bitcoin/</id>
+    <published>2021-10-31T01:43:54.000Z</published>
+    <updated>2021-11-01T06:43:12.531Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul><li>本篇将会以比特币为例介绍和简析风靡全球的数字加密货币背后的技术支撑和运作原理。本篇仅为缩略的概述，深度有限，因此如果你和我调研前一样对此一无所知，那么我预期各位在读完这篇博客后处于”I am still confused, but in a higher level.”的状态。后续如有兴趣或时间的话可能会继续深究并填补本文中的空缺。</li><li>至于为什么会有这篇文章，时间要追溯到很多个月前的一顿晚餐，当时在北京某互联网企业实习，组里的同学聊起<strong>比特币</strong>，我发现这个话题似乎已听到了很多次。每每谈及比特币，大家都兴致盎然，但从未有人说到其实现原理和内层逻辑。加上当晚没有工作压力，遂在晚饭后对比特币的基本原理做了简单的调研和学习。<span id="more"></span></li></ul><hr><br><br><blockquote><p>前置知识（非必要）：分布式系统基础，加密基础（公钥私钥），比特币/数字加密货币（生活中的直观了解）</p></blockquote><br><br><h2 id="比特币核心"><a href="#比特币核心" class="headerlink" title="比特币核心"></a>比特币核心</h2><p><strong>Bitcoin</strong><br>比特币是一种数字加密货币，是区块链技术最早期同时也是最著名的产物之一。可以说比特币和区块链技术相互成就，近些年区块链技术的迅速升温和比特币的爆火息息相关。</p><br><br><ul><li><h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><p><strong>Block Chain</strong></p><img src="/images/bitcoin/block_chain.png" style="height: 180px; "><ul><li>首先，什么是区块链呢？不知道各位尤其是非理工科的同学们对此是如何理解的，“区块”让人有一种地理划分的直觉，这大概是英译中造成的众多误解之一。“区块链”的英文是<strong>Block Chain</strong>, Block 的含义是一个“块”，每个块中存储了一定数目规定结构的信息，而 Block Chain 可以理解为由特定数据结构的 Blocks 们连接而成的链表, 该链表共享在分布式系统中（如比特币系统），用于记录需要记录的一切信息，以使得所有个体达到共识（consensus），这是分布式系统可靠性的基础。对于数字加密货币以及其他交易系统而言，Block Chain 的功能可以被简单理解为一个共享的公共账本，整个比特币网络都依赖于它。所有确认的交易都包含在区块链中。它允许比特币钱包计算其可支出余额，从而可以验证新的交易，从而确保它们实际上属于消费者。区块链的完整性和时间顺序是通过加密来实现的。</li><li><strong>Block</strong><img src="/images/bitcoin/block.png" style="height: 160px; ">上图是一个简化后的 Block 示意图，每一个 Block 由一定量数据（通常存储整个系统十分钟左右的交易以及其他相关信息），一个 hash 值， 以及上一个 Block 的 hash 值组成。</li></ul></li></ul><br><br><ul><li><h3 id="数字签名技术"><a href="#数字签名技术" class="headerlink" title="数字签名技术"></a>数字签名技术</h3><p><strong>Digital Signature</strong><br>顾名思义，数字签名技术是指以计算机的形式生成 0-1bit 串作为唯一标识而起到签名作用的技术。<br>我们要保证：</p><ul><li>签名无法被复制。</li><li>同时可以被识别。</li></ul><p>这里需要用到最经典的密码学内容：公钥和私钥（详细概念请自行检索）。简单来说，私钥保存在本地，确保其隐秘性；公钥则通过广播的方式让通讯系统内的其他成员全部获取到，当需要数字签名时，利用私钥生成数字签名，而其他成员均可以使用公钥来解码获得一个布尔值，验证签名是否正确。至此我们已经确保了签名可以被识别，而为了让签名无法被复制，我们用 message 内容本身作为加密算法的入参结合私钥生成签名，这意味着一旦内容被以任何形式篡改，我们的签名也将不再正确，以此满足了签名无法被复制的需求。</p><img src="/images/bitcoin/digital_signature.png" style="height: 54px; "><img src="/images/bitcoin/digital_signature_1.png" style="height: 50px "><p>以上分别是生成签名和验证签名的简化示意公式。</p><blockquote><p>关于私钥理论上无法被破解：<br>如果我们使用 256bit 的加密算法，将会有 2^256 个可能的私钥，而 2^256 的计算量远超目前科学认知范围</p></blockquote></li></ul><br><br><ul><li><h3 id="去中心化"><a href="#去中心化" class="headerlink" title="去中心化"></a>去中心化</h3><p><strong>Decentralization</strong></p><p>数字加密货币与传统支付系统的一大区别即为去中心化（分布式），以最典型的传统支付系统：银行为例，交易的“账本”被严格控制在银行，交易前，交易中，交易后(如账户中的钱是否足够交易，交易记录，等)的控制均完全依赖银行。而在数字加密货币的系统中，没有中心机构，“账本”由系统中的所有参与者共同记录，更新和保存。由于去中心化的设计和实现，比起传统交易系统，数字加密货币从原理上来说显然更加安全和可靠。</p><p>那么接下来的问题是，如何实现分布式的“账本”呢？也即如何保持这些“账本”的一致性和可靠性。数字加密货币给出的选择是<strong>信任消耗计算资源最多的样本</strong>，是工作量证明和挖矿背后的逻辑。</p><p>这里肉身翻译了一小段论文，它很好的解释了去中心化的重要意义和进步，也从某种程度上让我们更容易理解比特币提出时的需求和初衷。</p><blockquote><p>目前互联网的商业行为几乎完全依赖金融机构作为可信赖的第三方。虽然该系统对大多数任务都能很好地完成，但它仍然受到基于信任模型的固有弱点的困扰。完全不可逆转的交易实际上是不可能的，因为金融机构无法避免调解纠纷。调解成本增加了交易成本，限制了最小实际交易规模，并切断了小型偶然交易的可能性。有了逆转的可能性，对信任的需求就会膨胀。商家必须对他们的顾客保持警惕，不断地向他们索要更多的信息。一定比例的欺诈是不可避免的。这些成本和支付的不确定性可以通过使用实物货币来避免，但在没有可信方的情况下，还不存在通过通信通道进行支付的机制。我们需要的是一个基于加密证明而不是“信任”的电子支付系统，允许任意两方直接进行交易，而不需要信任第三方。</p></blockquote></li></ul><br><br><ul><li><h3 id="工作量证明"><a href="#工作量证明" class="headerlink" title="工作量证明"></a>工作量证明</h3><p><strong>Proof of work</strong></p><ul><li>我曾经听到过对于矿工炒高显卡价格的抱怨，不清楚是否是事实，但“挖矿”对于显卡的的需求确实非常高，事实上超大的计算量正是区块链技术安全性的关键保障。我们常说到的挖矿指代的就是这个部分。我认为把这个过程称为“挖矿”带有一定的误导性。所谓的矿工对于这个系统而言是至关重要的组成部分，他们之于系统的作用更接近“维护者”，只是在这个过程中可以获得报酬（当然他们参与其中的主要目的可能就是获利）。而之所以叫做“mining”是由于对于这些加密货币的维护者来说，每一次对 block 的计算都有一定几率成为率先计算出指定工作量证明的维护者，就可以获得一定数目的比特币作为报酬，这个有可能计算成功并获得报酬的过程对于个体而言充满不确定性和随机性，某种程度上就像是挖矿。<br></li><li>比特币挖矿是让计算机硬件对比特币网络进行数学计算，以确认交易并提高安全性的过程。作为对他们服务的奖励，比特币矿工可以为他们确认的交易收取交易费，以及新创建的比特币。采矿是一个专业化和竞争性的市场，在这里，报酬是根据计算的多少来划分的。</li><li>矿工们在系统中的行为大致上是：聆听系统中广播的交易信息，寻找特定的字符串，使得一个存储若干交易信息的新 block 在加上这串字符串后通过加密算法生成的密码前 n 位为 0，如果我们规定 n 为 60，那么理论上矿工平均需要进行 2^60 此的尝试和计算后才能获得一个合法的 block,之后把这个生成的 block 在广播到系统中。</li><li>系统中的所有成员都在随时聆听广播的 block-chain，当有新 block-chain 被生成并广播时，就会更新本地存储的 block-chain， 如果同时有多个不同的 block-chain 被广播，则选取最长的（也就是工作量最大的 block-chain）。</li><li>工作量证明可以说是数字加密货币的核心，数字加密货币系统总是信任工作量最大的 block-chain 这点保证了系统的可靠性，我们可以假设有用户试图篡改或编造 block，那么由于数字签名技术，该用户需要重新计算所有被篡改或编造的 block 后的所有 block。又因为数字加密货币系统总是信任工作量最大的 block-chain 的规则，该用户需要至少控制整个分布式系统一半以上的计算资源才能保证短期内较小概率的篡改成功，而这在如此庞大的分布式系统中是不可能发生的。</li></ul></li></ul><br><br><h2 id="拓展阅读"><a href="#拓展阅读" class="headerlink" title="拓展阅读"></a>拓展阅读</h2><ul><li><a href="https://bitcoin.org/bitcoin.pdf">比特币原始论文</a></li><li><a href="https://en.wikipedia.org/wiki/Bitcoin">wiki</a></li></ul><br><br><h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>这就是加密货币的大致基础了~<br>为了应景，在最后的署名位置用 SHA-256 加密算法生成了自己的签名(如今 hash 加密的主流算法之一)。鉴于本文中所阐述过的，如果你还不知道我的名字，那就得抓紧开始猜了，不知道在人类灭绝前能不能猜得出来呢。</p><div style="color: darkgrey;">Author: 127f3c1312ac56eff67a61ab9a89c6669d7b48c8c061c847b9abd866b1694fb6</div>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;本篇将会以比特币为例介绍和简析风靡全球的数字加密货币背后的技术支撑和运作原理。本篇仅为缩略的概述，深度有限，因此如果你和我调研前一样对此一无所知，那么我预期各位在读完这篇博客后处于”I am still confused, but in a higher level.”的状态。后续如有兴趣或时间的话可能会继续深究并填补本文中的空缺。&lt;/li&gt;
+&lt;li&gt;至于为什么会有这篇文章，时间要追溯到很多个月前的一顿晚餐，当时在北京某互联网企业实习，组里的同学聊起&lt;strong&gt;比特币&lt;/strong&gt;，我发现这个话题似乎已听到了很多次。每每谈及比特币，大家都兴致盎然，但从未有人说到其实现原理和内层逻辑。加上当晚没有工作压力，遂在晚饭后对比特币的基本原理做了简单的调研和学习。&lt;/li&gt;&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="bitcoin" scheme="https://lizhenqiao.github.io/tags/bitcoin/"/>
+    
+    <category term="休闲" scheme="https://lizhenqiao.github.io/tags/%E4%BC%91%E9%97%B2/"/>
+    
+    <category term="科普" scheme="https://lizhenqiao.github.io/tags/%E7%A7%91%E6%99%AE/"/>
+    
+    <category term="百科" scheme="https://lizhenqiao.github.io/tags/%E7%99%BE%E7%A7%91/"/>
+    
+    <category term="虚拟货币" scheme="https://lizhenqiao.github.io/tags/%E8%99%9A%E6%8B%9F%E8%B4%A7%E5%B8%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Important! Meeting With Me | 重要！与我的茶话会</title>
+    <link href="https://lizhenqiao.github.io/2021/09/09/Important-Meeting-With-Me-%E9%87%8D%E8%A6%81%EF%BC%81%E4%B8%8E%E6%88%91%E7%9A%84%E8%8C%B6%E8%AF%9D%E4%BC%9A/"/>
+    <id>https://lizhenqiao.github.io/2021/09/09/Important-Meeting-With-Me-%E9%87%8D%E8%A6%81%EF%BC%81%E4%B8%8E%E6%88%91%E7%9A%84%E8%8C%B6%E8%AF%9D%E4%BC%9A/</id>
+    <published>2021-09-10T02:12:51.000Z</published>
+    <updated>2021-09-30T03:49:44.968Z</updated>
+    
+    <content type="html"><![CDATA[<p>茶话会火热进行中(线下/远程视频)，目的在于拓宽视野，当然更重要的是闲聊一下。<br>鉴于我的交际能力和交际倾向，这看上去也许不像是该做的事情，事实上在视频前我有可能还会紧张一会儿。</p><span id="more"></span><p>其实俺觉得自己还是比较open的，尤其是最近一年，所以对于在纠结的人来说，我想你只需要考虑自己是否有兴趣聊天。在我的视角来看会非常鼓励大家联系，俺在任何时候都总是会期待这样的交流。</p><p><strong>如何参加？</strong></p><p>如果你：</p><blockquote><ul><li>想要和我玩耍</li><li>有我的联系方式</li><li>想要/不介意在视频开始前告诉我你的身份<br>那么恭喜你，直接给我发讯息就好</li></ul></blockquote><blockquote><p>当然，不符合上面的情况也不要紧，您可以通过邮件与我预约交流(<a href="mailto:&#x39;&#52;&#x38;&#48;&#57;&#48;&#x34;&#x32;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;">&#x39;&#52;&#x38;&#48;&#57;&#48;&#x34;&#x32;&#55;&#64;&#x71;&#113;&#x2e;&#x63;&#x6f;&#x6d;</a>)</p></blockquote><p>期待和各位畅谈~</p><img src="/images/byteDanceDrawer.jpg" width="300px"><div class="text-center" width="100%">朋友圈盗图</div>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;茶话会火热进行中(线下/远程视频)，目的在于拓宽视野，当然更重要的是闲聊一下。&lt;br&gt;鉴于我的交际能力和交际倾向，这看上去也许不像是该做的事情，事实上在视频前我有可能还会紧张一会儿。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="life" scheme="https://lizhenqiao.github.io/tags/life/"/>
+    
+    <category term="introduce" scheme="https://lizhenqiao.github.io/tags/introduce/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Intro to LizhenQiao&#39;s Space | 点击readmore阅读全文喔</title>
+    <link href="https://lizhenqiao.github.io/2021/09/09/Intro-to-LizhenQiao-s-Space/"/>
+    <id>https://lizhenqiao.github.io/2021/09/09/Intro-to-LizhenQiao-s-Space/</id>
+    <published>2021-09-10T02:09:33.000Z</published>
+    <updated>2021-11-01T06:46:22.478Z</updated>
+    
+    <content type="html"><![CDATA[<p>大家好！欢迎来到乔立桢的个人网站~<br>按照目前的计划，该网站主要由左栏中的 tags 进行功能分割</p><span id="more"></span><p><a href="https://lizhenqiao.github.io/home">首页</a> 中将存放少量重要的信息，非常希望各位阅读和参与<br><a href="https://lizhenqiao.github.io/about">关于</a> 中为个人简介，您可以在这里看到粗略的简历 或许也可以看到生活简历<br><a href="https://lizhenqiao.github.io/tags">文章分类</a> 提供了检索特定类别或内容文章的功能，您可以通过它来浏览您感兴趣类别的文章<br><a href="https://lizhenqiao.github.io/tech">技术</a> 和 <a href="https://lizhenqiao.github.io/life">生活</a> 将会分别存放技术文章和生活相关的记录，当然按照我的习惯技术文章里会不会有内容目前还是未知事件<br>本站搜索则提供了快速检索本站内容的功能<br><a href="https://lizhenqiao.github.io/askme">树洞</a>顾名思义, 是一个树洞，曾经火过一阵子的“ask me anything”如今已经先后挂的差不多了。在这里我会回答一切正常和不正常的问题，期待在树洞与各位见面~<br>除此以外，该网站还接入了评论功能，大家有问题或想法欢迎多多评论！有更多问题或建议可联系 <a href="mailto:qiaolizhen98@gmail.com">邮箱</a><br><br><br><br><br>Hey! Welcome to <strong>LizhenQiao’s Space</strong> ! Check <a href="https://lizhenqiao.github.io/about">About</a> for more info about the owner. If you get any problems or have any questions while reading, you can reach me by <a href="mailto:qiaolizhen98@gmail.com">E-Mail</a>.<br>Have fun!</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;大家好！欢迎来到乔立桢的个人网站~&lt;br&gt;按照目前的计划，该网站主要由左栏中的 tags 进行功能分割&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="introduce" scheme="https://lizhenqiao.github.io/tags/introduce/"/>
+    
+  </entry>
+  
+</feed>
